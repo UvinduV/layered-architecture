@@ -37,6 +37,7 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
+    ItemDAO itemDAO=new ItemDAOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -72,7 +73,7 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
             /*Get all items*/
-            ItemDAO itemDAO =new ItemDAOImpl();
+
             ArrayList<ItemDTO>allItems=itemDAO.getAllItem();
             for (ItemDTO i: allItems) {
                 tblItems.getItems().add(new ItemTM(i.getCode(),i.getDescription(),i.getUnitPrice(),i.getQtyOnHand()));
@@ -138,7 +139,7 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-            ItemDAO itemDAO =new ItemDAOImpl();
+
             boolean isDelete=itemDAO.deleteItem(code);
             if (isDelete) {
                 tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -186,7 +187,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 //Save Item
-                ItemDAO itemDAO= new ItemDAOImpl();
+
                 ItemDTO dto =new ItemDTO(code,description,unitPrice,qtyOnHand);
                 itemDAO.saveItem(dto);
                 /*Connection connection = DBConnection.getDbConnection().getConnection();
@@ -211,7 +212,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
                 /*Update Item*/
-                ItemDAO itemDAO =new ItemDAOImpl();
+
                 ItemDTO dto =new ItemDTO(code,description,unitPrice,qtyOnHand);
                 itemDAO.updateItem(dto);
                 /*Connection connection = DBConnection.getDbConnection().getConnection();
@@ -239,7 +240,7 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemDAO itemDAO =new ItemDAOImpl();
+
         boolean isExistItem=itemDAO.existItem(code);
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
@@ -251,7 +252,7 @@ public class ManageItemsFormController {
 
     private String generateNewId() {
         try {
-            ItemDAO itemDAO=new ItemDAOImpl();
+
             return itemDAO.generateItemId();
             /*Connection connection = DBConnection.getDbConnection().getConnection();
             ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
