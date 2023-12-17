@@ -30,4 +30,16 @@ public class CustomerDAOImpl {
         return isSaved;
 
     }
+    public boolean updateCustomer(String id,String name,String address) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?, address=? WHERE id=?");
+        pstm.setString(1, name);
+        pstm.setString(2, address);
+        pstm.setString(3, id);
+        boolean isUpdate=pstm.executeUpdate()>0;
+
+        return isUpdate;
+
+    }
+
 }
