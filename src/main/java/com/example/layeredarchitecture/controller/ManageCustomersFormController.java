@@ -198,10 +198,13 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
+        CustomerDAOImpl customerDAO= new CustomerDAOImpl();
+        boolean isExist=customerDAO.existCustomer(id);
+       /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
         pstm.setString(1, id);
-        return pstm.executeQuery().next();
+        return pstm.executeQuery().next();*/
+        return isExist;
     }
 
 
@@ -212,10 +215,12 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            Connection connection = DBConnection.getDbConnection().getConnection();
+            CustomerDAOImpl customerDAO =new CustomerDAOImpl();
+            customerDAO.deleteCustomer(id);
+            /*Connection connection = DBConnection.getDbConnection().getConnection();
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
             pstm.setString(1, id);
-            pstm.executeUpdate();
+            pstm.executeUpdate();*/
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();
@@ -230,7 +235,9 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
+            CustomerDAOImpl customerDAO =new CustomerDAOImpl();
+            return customerDAO.generateNewID();
+            /*Connection connection = DBConnection.getDbConnection().getConnection();
             ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
             if (rst.next()) {
                 String id = rst.getString("id");
@@ -238,7 +245,7 @@ public class ManageCustomersFormController {
                 return String.format("C00-%03d", newCustomerId);
             } else {
                 return "C00-001";
-            }
+            }*/
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
         } catch (ClassNotFoundException e) {
