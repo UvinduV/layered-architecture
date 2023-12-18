@@ -7,6 +7,7 @@ import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.model.OrderDetailDTO;
+import com.example.layeredarchitecture.view.tdm.CustomerTM;
 import com.example.layeredarchitecture.view.tdm.OrderDetailTM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -28,6 +29,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -225,13 +227,18 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
-            Statement stm = connection.createStatement();
-            ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
-
-            while (rst.next()) {
-                cmbCustomerId.getItems().add(rst.getString("id"));
+            CustomerDAOImpl customerDAO= new CustomerDAOImpl();
+            ArrayList<CustomerDTO> allCustomers= customerDAO.getAllCustomer();
+            for (CustomerDTO c:allCustomers) {
+                cmbCustomerId.getItems().add(c.getId());
             }
+            /*Connection connection = DBConnection.getDbConnection().getConnection();
+            Statement stm = connection.createStatement();
+            ResultSet rst = stm.executeQuery("SELECT * FROM Customer");*/
+
+            /*while (rst.next()) {
+                cmbCustomerId.getItems().add(rst.getString("id"));
+            }*/
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to load customer ids").show();
@@ -243,12 +250,17 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            Connection connection = DBConnection.getDbConnection().getConnection();
-            Statement stm = connection.createStatement();
-            ResultSet rst = stm.executeQuery("SELECT * FROM Item");
-            while (rst.next()) {
-                cmbItemCode.getItems().add(rst.getString("code"));
+            ItemDAOImpl itemDAO=new ItemDAOImpl();
+            ArrayList<ItemDTO>allItems=itemDAO.getAllItem();
+            for (ItemDTO i: allItems) {
+                cmbItemCode.getItems().add(i.getCode());
             }
+            /*Connection connection = DBConnection.getDbConnection().getConnection();
+            Statement stm = connection.createStatement();
+            ResultSet rst = stm.executeQuery("SELECT * FROM Item");*/
+            /*while (rst.next()) {
+                cmbItemCode.getItems().add(rst.getString("code"));
+            }*/
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
