@@ -20,6 +20,7 @@ public class OrderDAOImpl implements OrderDAO{
 
         return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
     }
+    @Override
     public boolean existOrder(String orderId,Connection connection) throws SQLException {
         PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
         stm.setString(1, orderId);
@@ -31,6 +32,7 @@ public class OrderDAOImpl implements OrderDAO{
             return false;
         }
     }
+    @Override
     public boolean saveOrder(String orderId, LocalDate orderDate,String customerId,Connection connection) throws SQLException {
         PreparedStatement stm = connection.prepareStatement("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)");
         stm.setString(1, orderId);
