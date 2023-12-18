@@ -70,6 +70,7 @@ public class CustomerDAOImpl implements CustomerDAO{
             return "C00-001";
         }
     }
+    @Override
     public CustomerDTO searchCustomer(String newValue) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
