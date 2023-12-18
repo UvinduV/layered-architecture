@@ -53,6 +53,11 @@ public class ItemDAOImpl implements ItemDAO{
         PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
         pstm.setString(1, code);
         return pstm.executeQuery().next();
+
+        /*Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
+        pstm.setString(1, code);
+        return pstm.executeQuery().next();*/
     }
     @Override
     public String  generateItemId() throws SQLException, ClassNotFoundException {
