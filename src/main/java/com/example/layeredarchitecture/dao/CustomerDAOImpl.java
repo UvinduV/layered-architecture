@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CustomerDAOImpl implements CustomerDAO{
     @Override
-    public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
+    public ArrayList<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();
         ResultSet rst = stm.executeQuery("SELECT * FROM Customer");*/
@@ -22,34 +22,34 @@ public class CustomerDAOImpl implements CustomerDAO{
         return getAllCustomer;
     }
     @Override
-    public boolean saveCustomer(String id,String name,String address) throws SQLException, ClassNotFoundException {
+    public boolean save(CustomerDTO dto) throws SQLException, ClassNotFoundException {
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("INSERT INTO Customer (id,name, address) VALUES (?,?,?)");
         pstm.setString(1, id);
         pstm.setString(2, name);
         pstm.setString(3, address);*/
 
-       boolean isSaved =SqlUtil.test("INSERT INTO Customer (id,name, address) VALUES (?,?,?)",id,name,address);
+       boolean isSaved =SqlUtil.test("INSERT INTO Customer (id,name, address) VALUES (?,?,?)",dto.getId(),dto.getName(),dto.getAddress());
         //boolean isSaved = pstm.executeUpdate() > 0;
 
         return isSaved;
 
     }
     @Override
-    public boolean updateCustomer(String id,String name,String address) throws SQLException, ClassNotFoundException {
+    public boolean update(CustomerDTO dto) throws SQLException, ClassNotFoundException {
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?, address=? WHERE id=?");
         pstm.setString(1, name);
         pstm.setString(2, address);
         pstm.setString(3, id);
         boolean isUpdate=pstm.executeUpdate()>0;*/
-        boolean isUpdate=SqlUtil.test("UPDATE Customer SET name=?, address=? WHERE id=?",name,address,id);
+        boolean isUpdate=SqlUtil.test("UPDATE Customer SET name=?, address=? WHERE id=?",dto.getName(),dto.getAddress(),dto.getId());
 
         return isUpdate;
 
     }
     @Override
-    public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
         pstm.setString(1, id);
@@ -57,7 +57,7 @@ public class CustomerDAOImpl implements CustomerDAO{
         return SqlUtil.test("DELETE FROM Customer WHERE id=?",id);
     }
     @Override
-    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
         pstm.setString(1, id);*/
@@ -79,7 +79,7 @@ public class CustomerDAOImpl implements CustomerDAO{
         }
     }
     @Override
-    public CustomerDTO searchCustomer(String newValue) throws SQLException, ClassNotFoundException {
+    public CustomerDTO search(String newValue) throws SQLException, ClassNotFoundException {
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
         pstm.setString(1, newValue + "");

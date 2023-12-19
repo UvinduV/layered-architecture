@@ -103,7 +103,7 @@ public class PlaceOrderFormController {
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
                         CustomerDAO customerDAO =new CustomerDAOImpl();
-                        CustomerDTO customerDTO=customerDAO.searchCustomer(newValue);
+                        CustomerDTO customerDTO=customerDAO.search(newValue);
                         /*PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
                         pstm.setString(1, newValue + "");
                         ResultSet rst = pstm.executeQuery();
@@ -136,7 +136,7 @@ public class PlaceOrderFormController {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
                     ItemDAO itemDAO=new ItemDAOImpl();
-                    ItemDTO item=itemDAO.searchItem(newItemCode);
+                    ItemDTO item=itemDAO.search(newItemCode);
                     /*Connection connection = DBConnection.getDbConnection().getConnection();
                     PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
                     pstm.setString(1, newItemCode + "");
@@ -188,7 +188,7 @@ public class PlaceOrderFormController {
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
         ItemDAO itemDAO= new ItemDAOImpl();
-        boolean isExistItem=itemDAO.existItem(code);
+        boolean isExistItem=itemDAO.exist(code);
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
         pstm.setString(1, code);
@@ -198,7 +198,7 @@ public class PlaceOrderFormController {
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
         CustomerDAO customerDAO=new CustomerDAOImpl();
-        boolean isExistCustomer=customerDAO.existCustomer(id);
+        boolean isExistCustomer=customerDAO.exist(id);
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
         pstm.setString(1, id);
@@ -209,7 +209,7 @@ public class PlaceOrderFormController {
     public String generateNewOrderId() {
         try {
             OrderDAO orderDAO= new OrderDAOImpl();
-            return orderDAO.generateOrderId();
+            return orderDAO.generateNewID();
             /*Connection connection = DBConnection.getDbConnection().getConnection();
             Statement stm = connection.createStatement();
             ResultSet rst = stm.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
@@ -226,7 +226,7 @@ public class PlaceOrderFormController {
     private void loadAllCustomerIds() {
         try {
             CustomerDAO customerDAO= new CustomerDAOImpl();
-            ArrayList<CustomerDTO> allCustomers= customerDAO.getAllCustomer();
+            ArrayList<CustomerDTO> allCustomers= customerDAO.getAll();
             for (CustomerDTO c:allCustomers) {
                 cmbCustomerId.getItems().add(c.getId());
             }
@@ -249,7 +249,7 @@ public class PlaceOrderFormController {
         try {
             /*Get all items*/
             ItemDAO itemDAO=new ItemDAOImpl();
-            ArrayList<ItemDTO>allItems=itemDAO.getAllItem();
+            ArrayList<ItemDTO>allItems=itemDAO.getAll();
             for (ItemDTO i: allItems) {
                 cmbItemCode.getItems().add(i.getCode());
             }
@@ -360,7 +360,7 @@ public class PlaceOrderFormController {
             stm.setString(1, orderId);*/
             /*if order id already exist*/
             OrderDAO orderDAO=new OrderDAOImpl();
-            boolean isexistOrder=orderDAO.existOrder(orderId,connection);
+            boolean isexistOrder=orderDAO.exist(orderId);
             if (isexistOrder) {
 
             }
