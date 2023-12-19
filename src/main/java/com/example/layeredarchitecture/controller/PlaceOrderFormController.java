@@ -348,7 +348,7 @@ public class PlaceOrderFormController {
         cmbItemCode.getSelectionModel().clearSelection();
         tblOrderDetails.getItems().clear();
         txtQty.clear();
-        calculateTotal();
+        calculateTotal();//
     }
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException {
