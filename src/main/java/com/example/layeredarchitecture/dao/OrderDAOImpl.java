@@ -25,10 +25,10 @@ public class OrderDAOImpl implements OrderDAO{
         PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
         stm.setString(1, orderId);
         if (stm.executeQuery().next()) {
-            connection.setAutoCommit(false);
+           // connection.setAutoCommit(false);
             return true;
         }else {
-            connection.setAutoCommit(false);
+            //connection.setAutoCommit(false);
             return false;
         }
     }
@@ -40,8 +40,8 @@ public class OrderDAOImpl implements OrderDAO{
         stm.setString(3, customerId);
 
         if (stm.executeUpdate() != 1) {
-            connection.rollback();
-            connection.setAutoCommit(true);
+           // connection.rollback();
+           // connection.setAutoCommit(true);
             return false;
         }else {
             return true;

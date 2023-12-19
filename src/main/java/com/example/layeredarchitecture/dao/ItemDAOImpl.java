@@ -104,12 +104,12 @@ public class ItemDAOImpl implements ItemDAO{
         pstm.setString(4, item.getCode());
 
         if (!(pstm.executeUpdate() > 0)) {
-            connection.rollback();
-            connection.setAutoCommit(true);
+            //connection.rollback();
+            //connection.setAutoCommit(true);
             return false;
         }else {
-            connection.commit();
-            connection.setAutoCommit(true);
+            //connection.commit();
+            //connection.setAutoCommit(true);
             return true;
         }
     }

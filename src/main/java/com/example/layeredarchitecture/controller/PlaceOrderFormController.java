@@ -364,10 +364,12 @@ public class PlaceOrderFormController {
             if (isexistOrder) {
 
             }
-            //connection.setAutoCommit(false);
+            connection.setAutoCommit(false);
 
             boolean isSaved=orderDAO.saveOrder(orderId,orderDate,customerId,connection);
             if (!isSaved) {
+                connection.rollback();
+                connection.setAutoCommit(true);
                 return false;
             }
             /*stm = connection.prepareStatement("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)");
@@ -384,6 +386,8 @@ public class PlaceOrderFormController {
             OrderDetailDAO orderDetailDAO=new OrderDetailDAOImpl();
             boolean isSaveOrderDetail=orderDetailDAO.saveOrderDetail(orderId,orderDetails,connection);
             if (!isSaveOrderDetail) {
+                connection.rollback();
+                connection.setAutoCommit(true);
                 return false;
             }
             /* stm = connection.prepareStatement("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)");
@@ -405,7 +409,7 @@ public class PlaceOrderFormController {
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
                 ItemDAO itemDAO =new ItemDAOImpl();
-                itemDAO.updateItem(item,connection);
+                boolean itemQTY=itemDAO.updateItem(item,connection);
                 /*PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
                 pstm.setString(1, item.getDescription());
                 pstm.setBigDecimal(2, item.getUnitPrice());
@@ -417,10 +421,15 @@ public class PlaceOrderFormController {
                     connection.setAutoCommit(true);
                     return false;
                 }*/
+                if(!itemQTY){
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                }
+
             }
 
-            /*connection.commit();
-            connection.setAutoCommit(true);*/
+            connection.commit();
+            connection.setAutoCommit(true);
             return true;
 
         } catch (SQLException throwables) {

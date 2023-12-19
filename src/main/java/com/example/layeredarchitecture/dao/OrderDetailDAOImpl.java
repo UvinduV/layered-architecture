@@ -20,8 +20,8 @@ public class OrderDetailDAOImpl implements OrderDetailDAO{
         }
 
             if (!(stm.executeUpdate()>0)) {
-                connection.rollback();
-                connection.setAutoCommit(true);
+                //connection.rollback();
+               // connection.setAutoCommit(true);
                 return false;
             } else {
                 return true;
