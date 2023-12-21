@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="540.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.layeredarchitecture.controller.SearchOrderFormController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="80.0" layoutX="10.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="654.0">
+         <fill>
+            <LinearGradient endX="0.04807692307692308" endY="0.7115384615384616">
+               <stops>
+                  <Stop color="#1598d6" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <ImageView id="imgHome" fitHeight="53.0" fitWidth="55.0" layoutX="32.0" layoutY="26.0" onMouseClicked="#navigateToHome" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assests/images/home-icon.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label layoutX="105.0" layoutY="34.0" text="Search Order">
+         <font>
+            <Font name="Lucida Sans Demibold" size="27.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="cmbCustomerId" labelFloat="true" layoutX="24.0" layoutY="142.0" onAction="#CustomerIDOnAction" prefHeight="28.0" prefWidth="161.0" promptText="Customer ID :" />
+      <TextField fx:id="txtCustomerName" layoutX="205.0" layoutY="142.0" prefHeight="28.0" prefWidth="437.0" promptText="Customer Name :" />
+      <JFXComboBox fx:id="CmbOrderID" labelFloat="true" layoutX="24.0" layoutY="188.0" onAction="#OrderIDOnAction" prefHeight="28.0" prefWidth="161.0" promptText="OrderID :" />
+      <TableView fx:id="tblOrderDetails" layoutX="81.0" layoutY="281.0" prefHeight="204.0" prefWidth="503.0">
+         <columns>
+            <TableColumn prefWidth="77.0" text="Code" />
+            <TableColumn prefWidth="174.0" text="Description" />
+            <TableColumn prefWidth="64.0" text="Qty" />
+            <TableColumn prefWidth="99.0" text="Unit Price" />
+            <TableColumn prefWidth="90.0" text="Total" />
+         </columns>
+      </TableView>
+      <TextField fx:id="txtOrderDate" layoutX="205.0" layoutY="194.0" prefHeight="28.0" prefWidth="437.0" promptText="Order Date :" />
+   </children>
+</AnchorPane>
