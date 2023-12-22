@@ -1,4 +1,4 @@
-package com.example.layeredarchitecture.dao.impl;
+package com.example.layeredarchitecture.dao.custom.impl;
 
 import com.example.layeredarchitecture.dao.SqlUtil;
 import com.example.layeredarchitecture.dao.custom.JointQueryDAO;

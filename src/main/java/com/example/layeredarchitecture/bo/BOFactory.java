@@ -1,14 +1,8 @@
 package com.example.layeredarchitecture.bo;
 
-import com.example.layeredarchitecture.bo.impl.CustomerBOImpl;
-import com.example.layeredarchitecture.bo.impl.ItemBOImpl;
-import com.example.layeredarchitecture.bo.impl.PlaceOrderBOImpl;
-import com.example.layeredarchitecture.dao.DAOFactory;
-import com.example.layeredarchitecture.dao.SuperDAO;
-import com.example.layeredarchitecture.dao.impl.CustomerDAOImpl;
-import com.example.layeredarchitecture.dao.impl.ItemDAOImpl;
-import com.example.layeredarchitecture.dao.impl.OrderDAOImpl;
-import com.example.layeredarchitecture.dao.impl.OrderDetailDAOImpl;
+import com.example.layeredarchitecture.bo.custom.impl.CustomerBOImpl;
+import com.example.layeredarchitecture.bo.custom.impl.ItemBOImpl;
+import com.example.layeredarchitecture.bo.custom.impl.PlaceOrderBOImpl;
 
 public class BOFactory {
     private static BOFactory boFactory;
