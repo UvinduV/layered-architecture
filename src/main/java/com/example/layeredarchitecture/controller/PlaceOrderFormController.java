@@ -63,7 +63,7 @@ public class PlaceOrderFormController {
     //ItemDAO itemDAO=new ItemDAOImpl();
     //OrderDAO orderDAO= new OrderDAOImpl();
     PlaceOrderBo placeOrderBO=new PlaceOrderBOImpl();
-    OrderDetailDAO orderDetailDAO=new OrderDetailDAOImpl();
+    //OrderDetailDAO orderDetailDAO=new OrderDetailDAOImpl();
 
     public void initialize() throws SQLException, ClassNotFoundException {
 

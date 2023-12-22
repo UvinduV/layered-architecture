@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.ItemBO;
+import com.example.layeredarchitecture.bo.ItemBOImpl;
 import com.example.layeredarchitecture.dao.custom.ItemDAO;
 import com.example.layeredarchitecture.dao.impl.ItemDAOImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -36,7 +38,8 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
-    ItemDAO itemDAO=new ItemDAOImpl();
+   // ItemDAO itemDAO=new ItemDAOImpl();
+    ItemBO itemBO=new ItemBOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -73,7 +76,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
 
-            ArrayList<ItemDTO>allItems=itemDAO.getAll();
+            ArrayList<ItemDTO>allItems=itemBO.getAllItem();
             for (ItemDTO i: allItems) {
                 tblItems.getItems().add(new ItemTM(i.getCode(),i.getDescription(),i.getUnitPrice(),i.getQtyOnHand()));
             }
@@ -139,7 +142,7 @@ public class ManageItemsFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
 
-            boolean isDelete=itemDAO.delete(code);
+            boolean isDelete=itemBO.deleteItem(code);
             if (isDelete) {
                 tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
                 tblItems.getSelectionModel().clearSelection();
@@ -188,7 +191,7 @@ public class ManageItemsFormController {
                 //Save Item
 
                 ItemDTO dto =new ItemDTO(code,description,unitPrice,qtyOnHand);
-                itemDAO.save(dto);
+                itemBO.saveItem(dto);
                 /*Connection connection = DBConnection.getDbConnection().getConnection();
                 PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)");
                 pstm.setString(1, code);
@@ -213,7 +216,7 @@ public class ManageItemsFormController {
                 /*Update Item*/
 
                 ItemDTO dto =new ItemDTO(code,description,unitPrice,qtyOnHand);
-                itemDAO.update(dto);
+                itemBO.updateItem(dto);
                 /*Connection connection = DBConnection.getDbConnection().getConnection();
                 PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
                 pstm.setString(1, description);
@@ -240,7 +243,7 @@ public class ManageItemsFormController {
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
 
-        boolean isExistItem=itemDAO.exist(code);
+        boolean isExistItem=itemBO.existItem(code);
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
         pstm.setString(1, code);
@@ -252,7 +255,7 @@ public class ManageItemsFormController {
     private String generateNewId() {
         try {
 
-            return itemDAO.generateNewID();
+            return itemBO.generateNewItemID();
             /*Connection connection = DBConnection.getDbConnection().getConnection();
             ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
             if (rst.next()) {
