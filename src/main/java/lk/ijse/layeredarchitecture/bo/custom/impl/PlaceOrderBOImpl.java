@@ -38,7 +38,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBo {
             }
             connection.setAutoCommit(false);
 
-            boolean isSaved=orderDAO.saveOrder(orderId,orderDate,customerId,connection);
+            boolean isSaved=orderDAO.saveOrder(orderId,orderDate,customerId);
             if (!isSaved) {
                 connection.rollback();
                 connection.setAutoCommit(true);
@@ -46,7 +46,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBo {
             }
 
 
-            boolean isSaveOrderDetail=orderDetailDAO.saveOrderDetail(orderId,orderDetails,connection);
+            boolean isSaveOrderDetail=orderDetailDAO.saveOrderDetail(orderId,orderDetails);
             if (!isSaveOrderDetail) {
                 connection.rollback();
                 connection.setAutoCommit(true);

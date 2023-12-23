@@ -1,5 +1,6 @@
 package lk.ijse.layeredarchitecture.dao.custom.impl;
 
+import lk.ijse.layeredarchitecture.dao.SqlUtil;
 import lk.ijse.layeredarchitecture.dao.custom.OrderDetailDAO;
 import lk.ijse.layeredarchitecture.dto.OrderDetailDTO;
 import lk.ijse.layeredarchitecture.entity.Customer;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class OrderDetailDAOImpl implements OrderDetailDAO {
     @Override
-    public boolean saveOrderDetail(String orderId, List<OrderDetailDTO>orderDetails, Connection connection) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)");
+    public boolean saveOrderDetail(String orderId, List<OrderDetailDTO>orderDetails) throws SQLException, ClassNotFoundException {
+        /*PreparedStatement stm = connection.prepareStatement("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)");
 
         for (OrderDetailDTO detail : orderDetails) {
             stm.setString(1, orderId);
@@ -28,7 +29,11 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
                 return false;
             } else {
                 return true;
-            }
+            }*/
+        /*return SqlUtil.test("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)",
+                orderId,orderDetails.getItemCode(),orderDetails.getUnitPrice(),orderDetails.getQty());*/
+        return SqlUtil.test("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)",
+                orderId,orderDetails.get(0).getItemCode(),orderDetails.get(0).getUnitPrice(),orderDetails.get(0).getQty());
 
     }
 

@@ -4,6 +4,7 @@ import lk.ijse.layeredarchitecture.dao.SqlUtil;
 import lk.ijse.layeredarchitecture.dao.custom.OrderDAO;
 import lk.ijse.layeredarchitecture.dto.OrderDTO;
 import lk.ijse.layeredarchitecture.entity.Customer;
+import lk.ijse.layeredarchitecture.entity.Order;
 
 
 import java.sql.Connection;
@@ -26,22 +27,22 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public OrderDTO search(String newValue) throws SQLException, ClassNotFoundException {
+    public Order search(String newValue) throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public ArrayList<OrderDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Order> getAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public boolean save(OrderDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Order entity) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public boolean update(OrderDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Order entity) throws SQLException, ClassNotFoundException {
         return false;
     }
 
@@ -65,7 +66,7 @@ public class OrderDAOImpl implements OrderDAO {
         }*/
     }
     @Override
-    public boolean saveOrder(String orderId, LocalDate orderDate,String customerId,Connection connection) throws SQLException, ClassNotFoundException {
+    public boolean saveOrder(String orderId, LocalDate orderDate,String customerId) throws SQLException, ClassNotFoundException {
         /*PreparedStatement stm = connection.prepareStatement("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)");
         stm.setString(1, orderId);
         stm.setDate(2, Date.valueOf(orderDate));

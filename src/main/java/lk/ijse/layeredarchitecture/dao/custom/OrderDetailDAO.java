@@ -8,5 +8,5 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface OrderDetailDAO extends CrudDAO<OrderDetailDTO> {
-    boolean saveOrderDetail(String orderId, List<OrderDetailDTO> orderDetails, Connection connection) throws SQLException ;
+    boolean saveOrderDetail(String orderId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException;
 }
