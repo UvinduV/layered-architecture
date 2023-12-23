@@ -1,15 +1,17 @@
-package com.example.layeredarchitecture.bo.custom.impl;
+package lk.ijse.layeredarchitecture.bo.custom.impl;
 
-import com.example.layeredarchitecture.bo.custom.PlaceOrderBo;
-import com.example.layeredarchitecture.dao.DAOFactory;
-import com.example.layeredarchitecture.dao.custom.CustomerDAO;
-import com.example.layeredarchitecture.dao.custom.ItemDAO;
-import com.example.layeredarchitecture.dao.custom.OrderDAO;
-import com.example.layeredarchitecture.dao.custom.OrderDetailDAO;
-import com.example.layeredarchitecture.db.DBConnection;
-import com.example.layeredarchitecture.model.CustomerDTO;
-import com.example.layeredarchitecture.model.ItemDTO;
-import com.example.layeredarchitecture.model.OrderDetailDTO;
+import lk.ijse.layeredarchitecture.bo.custom.PlaceOrderBo;
+import lk.ijse.layeredarchitecture.dao.DAOFactory;
+import lk.ijse.layeredarchitecture.dao.custom.CustomerDAO;
+import lk.ijse.layeredarchitecture.dao.custom.ItemDAO;
+import lk.ijse.layeredarchitecture.dao.custom.OrderDAO;
+import lk.ijse.layeredarchitecture.dao.custom.OrderDetailDAO;
+import lk.ijse.layeredarchitecture.db.DBConnection;
+import lk.ijse.layeredarchitecture.dto.CustomerDTO;
+import lk.ijse.layeredarchitecture.dto.ItemDTO;
+import lk.ijse.layeredarchitecture.dto.OrderDetailDTO;
+import lk.ijse.layeredarchitecture.entity.Customer;
+import lk.ijse.layeredarchitecture.entity.Item;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -57,7 +59,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBo {
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
 
-                boolean itemQTY=itemDAO.updateItem(item,connection);
+                boolean itemQTY=itemDAO.updateItem(new Item(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()),connection);
 
                 if(!itemQTY){
                     connection.rollback();
@@ -76,8 +78,8 @@ public class PlaceOrderBOImpl implements PlaceOrderBo {
     @Override
     public ItemDTO findItem(String code) {
         try {
-
-            return itemDAO.findItem(code);
+            Item item = itemDAO.findItem(code);
+            return new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand());
             /*Connection connection = DBConnection.getDbConnection().getConnection();
             PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
             pstm.setString(1, code);
@@ -93,11 +95,13 @@ public class PlaceOrderBOImpl implements PlaceOrderBo {
     }
     @Override
     public CustomerDTO searchCustomer(String newValue) throws SQLException, ClassNotFoundException {
-        return customerDAO.search(newValue);
+        Customer customer = customerDAO.search(newValue);
+        return new CustomerDTO(customer.getId(), customer.getName(), customer.getAddress());
     }
     @Override
     public ItemDTO searchItem(String newItemCode) throws SQLException, ClassNotFoundException {
-        return itemDAO.search(newItemCode);
+        Item item = itemDAO.search(newItemCode);
+        return new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand());
     }
     @Override
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {
@@ -113,11 +117,21 @@ public class PlaceOrderBOImpl implements PlaceOrderBo {
     }
     @Override
     public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
-        return customerDAO.getAll();
+        ArrayList<CustomerDTO>customerDtos = new ArrayList<>();
+        ArrayList<Customer>customers = customerDAO.getAll();
+        for (Customer customer: customers) {
+            customerDtos.add(new CustomerDTO(customer.getId(),customer.getName(),customer.getAddress()));
+        }
+        return customerDtos;
     }
     @Override
     public ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException {
-        return itemDAO.getAll();
+        ArrayList<ItemDTO>itemDTOS =new ArrayList<>();
+        ArrayList<Item>items=itemDAO.getAll();
+        for (Item item:items) {
+            itemDTOS.add(new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
+        }
+        return itemDTOS;
     }
 
 
